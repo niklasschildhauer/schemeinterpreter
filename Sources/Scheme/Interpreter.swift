@@ -17,7 +17,7 @@ public class Interpreter: Interpreting {
     private let symbolTable: SymbolTable = SymbolTable()
     private let evaluator: Evaluating
     
-    init(output delegate: PrinterDelegate){
+    public init(output delegate: PrinterDelegate){
         printer.delegate = delegate
         printer.print(message:"Grüß Gott bei meinem Schemle")
 
