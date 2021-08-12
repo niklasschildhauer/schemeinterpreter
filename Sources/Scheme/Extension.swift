@@ -89,30 +89,7 @@ extension String {
             || char == "\n"
             || char == "\r"
     }
-    
-    /// Returns true if the string is a valuable statement
-    func isInputValuable() -> Bool {
-        var openCount = 0;
-        var closeCount = 0;
-        // count number of opening and closing parantheseses
-        if self == "" {
-            return false
-        }
         
-        self.forEach { char in
-            if char == "(" {
-                openCount = openCount + 1;
-            }
-            if char == ")" {
-                closeCount = closeCount + 1 ;
-            }
-            if closeCount > openCount {
-                ERROR(message: "not a valid cons")
-            }
-        }
-        return openCount == closeCount
-    }
-    
     /// Removes from the string the whitespaces in the front and back.
     func skipWhiteSpaceAtBothEnds() -> String {
         var returnValue = self.skipWhiteSpace()

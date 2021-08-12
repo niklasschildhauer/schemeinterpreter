@@ -60,7 +60,6 @@ private extension Evaluator {
     private func eval(list: SchemeCons, environment: SchemeEnvironment) -> Object {
         let funcOrSyntax = self.eval(expression: list.car, environment: environment)
         guard let args = list.cdr.consObject() else {
-            ERROR(message: "No args")
             return .Error(message: "The list has no arguments")
         }
         
@@ -102,7 +101,6 @@ private extension Evaluator {
             
             for value in argListValue {
                 guard let name = argListName.car.symbolObject() else {
-                    ERROR(message: "There went something wrong")
                     return .Error(message: "There went somethin wrong")
                 }
                 if argListName.cdr != .Null {
@@ -150,12 +148,10 @@ private extension Evaluator {
         
         if let varName = varOrFunc.symbolObject() {
             guard let restArg = args.cdr.consObject() else {
-                ERROR(message: "(define): 2 args expected")
                 return .Error(message: "(define): 2 args expected")
             }
             
             if restArg.cdr != .Null {
-                ERROR(message: "(define): only 2 args expected")
                 return .Error(message: "(define): only 2 args expected")
             }
             
@@ -168,28 +164,23 @@ private extension Evaluator {
             // (define (funcname var var) (+ var var)) -> shorthand lambda
             //          -------  arglist   bodylist
             guard let cons = varOrFunc.consObject() else {
-                ERROR(message: "Bad arg. Es sollte ein Cons Objekt sein")
                 return .Error(message: "Bad arg. Es sollte ein Cons Objekt sein")
             }
             
             guard let funcName = cons.car.symbolObject() else {
-                ERROR(message: "Bad function name. Es sollte ein Symbol Objekt sein")
                 return .Error(message: "Bad function name. Es sollte ein Symbol Objekt sein")
             }
             
             guard let argList = cons.cdr.consObject() else {
-                ERROR(message: "Bad arg name list")
                 return .Error(message: "Bad arg name list")
             }
             
             if !self.isValidFormalArgList(args: argList) {
-                ERROR(message: "Bad arg name list")
                 return .Error(message: "Bad arg name list")
             }
             
             // (+ var var)
             guard let bodyList = args.cdr.consObject() else {
-                ERROR(message: "Body List is no cons")
                 return .Error(message: "Body List is no cons")
             }
             
@@ -219,17 +210,17 @@ private extension Evaluator {
         guard let varName = args.car.symbolObject(),
               let restArgs = args.cdr.consObject(),
               let unevaluatedVarValue = args.cdr.consObject()?.car else {
-                ERROR(message: "(set!): 2 args expected")
                 return .Error(message: "(set!): 2 args expected")
         }
         
         if restArgs.cdr != .Null {
-            ERROR(message: "(set!): only 2 args expected")
             return .Error(message: "(set!): only 2 args expected")
         }
         
         let varValue = self.eval(expression: unevaluatedVarValue, environment: environment)
-        environment.update(key: varName, value: varValue)
+        if environment.update(key: varName, value: varValue) == false {
+            return .Error(message: "(set!) - There is no binding for \(varName.characters)")
+        }
         
         return .Void
     }
@@ -238,11 +229,9 @@ private extension Evaluator {
         let unevaluatedCond = args.car
         guard let trueExpr = args.cdr.consObject()?.car,
               let falseExpr = args.cdr.consObject()?.cdr.consObject()?.car else {
-            ERROR(message: "(if): 3 args expected")
             return .Error(message: "(if): 3 args expected")
         }
         if unevaluatedCond == .Null || trueExpr == .Null || falseExpr == .Null {
-            ERROR(message: "(if): 3 args expected")
             return .Error(message: "(if): 3 args expected")
         }
         
@@ -254,18 +243,15 @@ private extension Evaluator {
         case .False:
             return self.eval(expression: falseExpr, environment: environment)
         default:
-            ERROR(message: "non binary condition")
             return .Error(message: "non binary condition")
         }
     }
     
     private func evalSyntax(lambda: SchemeSyntax, in environment: SchemeEnvironment, with args: SchemeCons) -> Object {
         guard let argList = args.car.consObject() else {
-            ERROR(message: "Args erwartet")
             return .Error(message: "Args erwartet")
         }
         guard let bodyList = args.cdr.consObject() else {
-            ERROR(message: "Mindestend 2 args erwartet")
             return .Error(message: "Mindestend 2 args erwartet")
         }
         
@@ -274,12 +260,10 @@ private extension Evaluator {
     
     private func evalSyntax(quote: SchemeSyntax, in environment: SchemeEnvironment, with args: SchemeCons) -> Object {
         if args.car == .Null {
-            ERROR(message: "(Quote): 1 arg erwartet")
             return .Error(message: "(Quote): 1 arg erwartet")
         }
         
         if args.cdr != .Null {
-            ERROR(message: "(Quote): genau 1 arg erwartet")
             return .Error(message: "(Quote): genau 1 arg erwartet")
         }
         return args.car

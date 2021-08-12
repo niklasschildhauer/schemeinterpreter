@@ -157,7 +157,7 @@ struct SchemeFile {
     mutating func nextLine() -> String? {
         var nextLine: String = ""
                 
-        while(!nextLine.isInputValuable()) {
+        while(!nextLine.isValuable()) {
             if endOfFile {
                 break
             }
@@ -175,8 +175,7 @@ struct SchemeFile {
 }
 
 
-// MARK: Object extensions
-
+//  MARK: Object extensions
 /// This extension of Object makes the enum compliant to the Equatable protocol.
 /// Through this the two checks for equality (=) & (eq?) are implemented.
 extension Object: Equatable {

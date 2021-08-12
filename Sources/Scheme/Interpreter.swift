@@ -40,7 +40,7 @@ public class Interpreter: Interpreting {
     }
     
     public func interpret(input: String) {
-        consoleIO.writeToConsole(input, to: .log)
+        printer.print(message: input)
         let object = reader.read(input: input)
         switch object {
         case .Error:

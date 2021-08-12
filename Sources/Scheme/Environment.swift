@@ -13,7 +13,7 @@ protocol SchemeEnvironment {
     var parentEnvironment: SchemeEnvironment? { get }
     var symbolTable: SymbolTable { get }
     
-    func update(key: SchemeSymbol, value: Object)
+    func update(key: SchemeSymbol, value: Object) -> Bool
     func insertOrUpdate(key: SchemeSymbol, value: Object)
     func get(key: SchemeSymbol) -> Object?
 }
@@ -72,17 +72,18 @@ extension Environment: SchemeEnvironment {
     }
     
     /// This function updates the value of a known bindig.
-    func update(key: SchemeSymbol, value: Object) {
+    func update(key: SchemeSymbol, value: Object) -> Bool{
         let cons = SchemeCons(car: .Symbol(value: key), cdr: value)
         
         if self.bindings.value(for: key) == nil {
-            return ERROR(message: "Keine Variable gefunden")
+            return false
         }
         self.bindings.update(value: cons, for: key)
                 
         if self.bindings.size > self.fillLimit(oldCapacity: bindings.maxCapacity) {
             self.grow()
         }
+        return true
     }
 }
 
