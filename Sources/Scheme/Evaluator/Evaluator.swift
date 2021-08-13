@@ -17,7 +17,7 @@ class Evaluator {
 //  MARK: Protocol conformance
 /// This extension conforms the evaluator class  to the Evaluating protocol. These functions are visible for the
 /// other files of the interpreter.
-extension Evaluator: Evaluating {
+extension Evaluator: SchemeEvaluatorProtocol {
     //Layer 1
     func eval(expression: Object, environment: SchemeEnvironment) -> Object{
         switch expression {

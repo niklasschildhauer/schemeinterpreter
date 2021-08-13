@@ -17,15 +17,15 @@ func ASSERT(condition: Bool, message: String) {
 class Selftest {
     // Change this value to disable the tests!
     private let testEnable = true
-    private let reader: SchemeReading
+    private let reader: SchemeReaderProtocol
     private let symbolTable: SymbolTable
     private let environment: SchemeEnvironment
-    private let evaluator: Evaluating
+    private let evaluator: SchemeEvaluatorProtocol
     
-    init(reader: SchemeReading,
+    init(reader: SchemeReaderProtocol,
          symbolTable: SymbolTable,
          environment: SchemeEnvironment,
-         evaluator: Evaluating) {
+         evaluator: SchemeEvaluatorProtocol) {
         self.reader = reader
         self.symbolTable = symbolTable
         self.environment = environment
@@ -37,7 +37,6 @@ class Selftest {
     }
     
     private func runTests() {
-        printer.print(message: "-----------------------")
         printer.print(message: "Start selftest...")
 
         runModelTests()
@@ -47,7 +46,6 @@ class Selftest {
         runEvaluatorTest()
         
         printer.print(message: "...selftest done")
-        printer.print(message: "-----------------------")
     }
     
     private func runModelTests() {

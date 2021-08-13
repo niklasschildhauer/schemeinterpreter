@@ -9,7 +9,7 @@ import Foundation
 
 //  MARK: Implementation Symbol Table
 /// Defines all functions which a symbol table should implement.
-protocol SymbolTableProtocol {
+protocol SchemeSymbolTableProtocol {
     var size: Int { get }
     
     func getOrCreate(symbol: String)-> SchemeSymbol
@@ -31,7 +31,7 @@ class SymbolTable {
 }
 
 // MARK: Protocol Conformance
-extension SymbolTable: SymbolTableProtocol {
+extension SymbolTable: SchemeSymbolTableProtocol {
     /// returns the count of the known symbols
     var size: Int {
         knownSymbols.size

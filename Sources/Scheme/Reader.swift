@@ -9,23 +9,23 @@ import Foundation
 
 //  MARK: Implementation Reader
 /// Defines all functions which a reader should implement.
-protocol SchemeReading {
+protocol SchemeReaderProtocol {
     func read(input: String) -> Object
 }
 
 /// This class is used to read the input stirng and create a Scheme Object from it
 /// or throw an input error.
 class Reader {
-    private let symbolTable: SymbolTable
+    private let symbolTable: SchemeSymbolTableProtocol
     
     //  MARK: Constructor
-    init(symbolTable: SymbolTable) {
+    init(symbolTable: SchemeSymbolTableProtocol) {
         self.symbolTable = symbolTable
     }
 }
 
 //  MARK: Protocol conformance
-extension Reader: SchemeReading {
+extension Reader: SchemeReaderProtocol {
 
     /// Creates a new input buffer for each new statement.
     /// It is called by the Interpreter and returns the read Object.

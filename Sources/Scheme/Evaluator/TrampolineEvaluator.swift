@@ -8,7 +8,7 @@
 import Foundation
 
 /// Evaluating Protocol to define the functions which are called by the interpreter class
-protocol Evaluating {
+protocol SchemeEvaluatorProtocol {
     func initializeBuiltInFunctions(in environment: SchemeEnvironment)
     func initializeBuiltInSyntax(in environment: SchemeEnvironment)
     func eval(expression: Object, environment: SchemeEnvironment) -> Object
@@ -32,7 +32,7 @@ class TrampolineEvaluator {
 //  MARK: Protocol conformance
 /// This extension conforms the trampoline evaluator class to the Evaluating protocol. These functions are visible for the
 /// other files of the interpreter.
-extension TrampolineEvaluator: Evaluating {
+extension TrampolineEvaluator: SchemeEvaluatorProtocol {
     /// This function is called to evaluate an object, which was read from the reader
     /// It returns the evaluated result in form of an object.
     /// This functions starts the trampoline function to start it.

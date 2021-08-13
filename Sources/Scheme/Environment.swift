@@ -11,7 +11,7 @@ import Foundation
 /// Defines all functions which a environment should implement
 protocol SchemeEnvironment {
     var parentEnvironment: SchemeEnvironment? { get }
-    var symbolTable: SymbolTable { get }
+    var symbolTable: SchemeSymbolTableProtocol { get }
     
     func update(key: SchemeSymbol, value: Object) -> Bool
     func insertOrUpdate(key: SchemeSymbol, value: Object)
@@ -22,14 +22,14 @@ protocol SchemeEnvironment {
 /// to the symbol table. In this way each symbol is only created once.
 class Environment {
     let parentEnvironment: SchemeEnvironment?
-    let symbolTable: SymbolTable
+    let symbolTable: SchemeSymbolTableProtocol
     /// It uses a self implemented HashTable. The Key is a SchemeSymbol  and the stored value a SchemeCons
     private var bindings: HashTable<SchemeSymbol, SchemeCons>
     private let init_environment_table_size = 20
     
     //  MARK: Constructors
     /// This construcotr is used to create the home environment (top environment)
-    init(symbolTable: SymbolTable) {
+    init(symbolTable: SchemeSymbolTableProtocol) {
         self.symbolTable = symbolTable
         self.parentEnvironment = nil
         self.bindings = HashTable<SchemeSymbol, SchemeCons>(capacity: init_environment_table_size)
