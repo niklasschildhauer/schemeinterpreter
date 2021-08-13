@@ -6,7 +6,8 @@ import PackageDescription
 let package = Package(
     name: "Scheme",
     products: [
-               .library(name: "Scheme", targets: ["Scheme"]), // als library nutzen?
+        .executable(name: "Scheme_Terminal", targets: ["Scheme"]),
+        .library(name: "Scheme", targets: ["Scheme"]),
            ],
     dependencies: [],
     targets: [

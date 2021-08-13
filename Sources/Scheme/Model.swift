@@ -157,7 +157,7 @@ struct SchemeFile {
     mutating func nextLine() -> String? {
         var nextLine: String = ""
                 
-        while(!nextLine.isValuable()) {
+        repeat {
             if endOfFile {
                 break
             }
@@ -169,7 +169,7 @@ struct SchemeFile {
                     nextLine.append(" \(lineValue)")
                 }
             }
-        }
+        } while(!nextLine.isValuable())
         return nextLine != "" ? nextLine : nil
     }
 }
