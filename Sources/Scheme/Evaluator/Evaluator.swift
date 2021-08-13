@@ -1,11 +1,13 @@
 //
-//  File.swift
-//  
+//  Evaluator.swift
+//  Scheme
 //
 //  Created by Niklas Schildhauer on 21.07.21.
 //
 
 import Foundation
+
+// MARK: Important: This eveluator was replaced by the Trampoline Evaluator and is outdated!
 
 class Evaluator {
     /// This stack contains the objects that are to be evaluated.

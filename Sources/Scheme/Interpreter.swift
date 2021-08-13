@@ -1,8 +1,8 @@
 //
-//  Scheme.swift
+//  Interpreter.swift
 //  Scheme
 //
-//  Created by Niklas Schildhauer on 02.04.21.
+//  Created by Niklas Schildhauer on 02.08.21.
 //
 
 import Foundation
@@ -66,13 +66,13 @@ extension Interpreter: SchemeInterpreterProtocol {
     /// The only public function outside the library. To use this interpreter,
     /// this function must be called and the PrinterDelegate returns the output
     public func interpret(input: String) {
-        printer.print(message: input)
         // convert the input string to a SchemeInput
         let object = reader.read(input: input)
         
         switch object {
         case .Error, .FatalError:
             // return an error message if the input is not valid
+            printer.print(hint: "Typed: \(input)\n")
             printer.print(object: object)
         default:
             // evaluate the scheme object
@@ -108,10 +108,13 @@ private extension Interpreter {
     /// For each line the interpret function is called to interpret it.
     private func readFile(file: SchemeFile) {
         var file = file
+        var count = 1
         printer.print(message: "\(file.path)")
         while(!file.endOfFile) {
             guard let line = file.nextLine() else { continue }
+            printer.print(hint: "\(count): \(line)")
             self.interpret(input: line)
+            count = count + 1
         }
     }
     

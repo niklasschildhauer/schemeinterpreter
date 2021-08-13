@@ -1,6 +1,6 @@
 //
 //  Stack.swift
-//  
+//  Scheme
 //
 //  Created by Niklas Schildhauer on 02.08.21.
 //

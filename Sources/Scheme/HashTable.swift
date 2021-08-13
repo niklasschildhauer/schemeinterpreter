@@ -1,6 +1,6 @@
 //
-//  File.swift
-//  
+//  HashTable.swift
+//  Scheme
 //
 //  Created by Niklas Schildhauer on 10.08.21.
 //

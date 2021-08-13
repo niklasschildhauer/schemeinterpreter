@@ -1,6 +1,6 @@
 //
-//  File.swift
-//  
+//  Printer.swift
+//  Scheme
 //
 //  Created by Niklas Schildhauer on 30.07.21.
 //
@@ -20,9 +20,10 @@ public protocol PrinterMarkerProtocol { }
 /// Through this the output device can decide over the style of the ouput.
 public enum OutputStyle {
     case error
-    case warn
+    case result
     case standard
     case message
+    case hint
 }
 
 //  MARK: Singelton
@@ -37,6 +38,7 @@ protocol SchemePrinting {
     func printTag(of object: Object)
     func print(message: String)
     func print(error message: String)
+    func print(hint message: String)
 }
 
 /// Implementation of the Printing protocol
@@ -50,7 +52,7 @@ class Printer {
 extension Printer: SchemePrinting, PrinterMarkerProtocol {
     /// Prints the object.
     func print(object: Object) {
-        self.delegate?.didComputeOutputString(output: self.string(of: object), style: .standard, in: self)
+        self.delegate?.didComputeOutputString(output: self.string(of: object), style: .result, in: self)
     }
     
     /// Displays the object.
@@ -58,10 +60,10 @@ extension Printer: SchemePrinting, PrinterMarkerProtocol {
     func display(object: Object) {
         switch object {
         case .String(value: let value):
-            self.delegate?.didComputeOutputString(output: value.characters, style: .standard, in: self)
+            self.delegate?.didComputeOutputString(output: value.characters, style: .result, in: self)
         case .Char(value: let value):
-            self.delegate?.didComputeOutputString(output: "\(value.character)", style: .standard, in: self)
-        default: self.delegate?.didComputeOutputString(output: self.string(of: object), style: .standard, in: self)
+            self.delegate?.didComputeOutputString(output: "\(value.character)", style: .result, in: self)
+        default: self.delegate?.didComputeOutputString(output: self.string(of: object), style: .result, in: self)
         }
     }
     
@@ -73,6 +75,11 @@ extension Printer: SchemePrinting, PrinterMarkerProtocol {
     /// Prints error messages
     func print(error message: String) {
         self.delegate?.didComputeOutputString(output: message, style: .error, in: self)
+    }
+    
+    /// Prints hint messages
+    func print(hint message: String) {
+        self.delegate?.didComputeOutputString(output: message, style: .hint, in: self)
     }
     
     /// Prints the tag of the object

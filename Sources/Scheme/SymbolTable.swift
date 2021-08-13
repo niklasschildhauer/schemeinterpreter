@@ -1,6 +1,6 @@
 //
 //  SymbolTable.swift
-//  
+//  Scheme
 //
 //  Created by Niklas Schildhauer on 21.07.21.
 //
