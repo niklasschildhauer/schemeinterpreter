@@ -52,7 +52,12 @@ class Printer {
 extension Printer: SchemePrinting, PrinterMarkerProtocol {
     /// Prints the object.
     func print(object: Object) {
-        self.delegate?.didComputeOutputString(output: self.string(of: object), style: .result, in: self)
+        switch object {
+        case .Error(_, _, _, _), .FatalError(_, _, _, _):
+            self.delegate?.didComputeOutputString(output: self.string(of: object), style: .message, in: self)
+        default:
+            self.delegate?.didComputeOutputString(output: self.string(of: object), style: .result, in: self)
+        }
     }
     
     /// Displays the object.
