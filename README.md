@@ -2,7 +2,7 @@
 This interpreter was developed for the lecture "Design und Implementation fortgeschrittener Programmiersprachen" at HdM Stuttgart in SS2021.
 The lecture was given by Claus Gittinger. 
 
-The interpreter was built in Swift 5.4.2 as an executable Swift package. For full functionality, swift-tools-version:5.3 is required. As an alternative, the interpreter was also created as a command line project for Xcode 10.1, which can be found at: [Xcode 10.1 project](https://github.com/niklasschildhauer/Scheme-Swift-Xcode10.1/tree/main/Scheme-Swift-Xcode10.1)   
+The interpreter was built in Swift 5.4.2 as an executable Swift package. For full functionality, swift-tools-version:5.3 is required. As an alternative, the interpreter was also created as a command line project for Xcode 10.1, which can be found at: [Xcode 10.1 project](https://github.com/niklasschildhauer/Scheme-Swift-Xcode10.1)   
 
 ### Build
 The build process can either be executed automatically in Xcode 12 or manually in the terminal using the following commands:
