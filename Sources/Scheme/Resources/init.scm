@@ -55,8 +55,23 @@
 	    (helper start (- stop 1) (cons stop listTail))))
     (helper start stop ()))
     
-(define factorial (lambda (n) (if (= n 0) 1 (* n (factorial (- n 1))))))
-(define fibonacci (lambda (n) (if (< n 2) 1 (+ (fibonacci (- n 1)) (fibonacci (- n 2))))))
+(define pow
+    (lambda (num n)
+        (if (= n 0)
+            1
+            (* num (pow num (- n 1))))))
+    
+(define factorial
+  (lambda(n)
+    (if (= n 0)
+      1
+      (* n (factorial (- n 1))))))
+            
+(define fibonacci (lambda (n)
+  (if (<= n 2)
+      1
+      (+ (fib (- n 1)) (fib (- n 2))))))
+
 
 ; (load "compiler.scm")
 
