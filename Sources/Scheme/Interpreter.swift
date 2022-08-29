@@ -26,7 +26,7 @@ public class Interpreter {
         
         // Is displayed at begin
         let welcomeMessage = """
-            Grüß Gott und herzlich Willkommen bei meinem Scheme Interpreter 🙋🏼‍♂️!
+            Hello and a warm welcome to my Scheme Interpreter 🙋🏼‍♂️!
             
                  ƛƛƛ  ƛƛ
                   ƛƛƛ
@@ -55,7 +55,8 @@ public class Interpreter {
         self.startSelftest()
         self.loadInitFile()
             
-        printer.print(message: "\n...done")
+        printer.print(message: "\nResetting environment...")
+        printer.print(message: "\n...done. All cleaned up and ready to use. Have fun!")
         printer.print(message: "----------------------------\n\n")
     }
 }
